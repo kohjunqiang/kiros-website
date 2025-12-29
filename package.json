@@ -1,0 +1,15 @@
+{
+  "name": "kiros-landing-page",
+  "version": "1.0.0",
+  "description": "KIROS Landing Page with Vercel Serverless Functions",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "resend": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
