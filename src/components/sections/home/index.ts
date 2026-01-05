@@ -1,0 +1,11 @@
+export { HeroSection } from './HeroSection';
+export { StatsSection } from './StatsSection';
+export { DashboardPreview } from './DashboardPreview';
+export { PastWaySection } from './PastWaySection';
+export { KirosWaySection } from './KirosWaySection';
+export { ROISection } from './ROISection';
+export { AccuracySection } from './AccuracySection';
+export { StrategicSection } from './StrategicSection';
+export { ComplianceSection } from './ComplianceSection';
+export { SecuritySection } from './SecuritySection';
+export { FAQSection } from './FAQSection';

@@ -4,61 +4,77 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a static HTML landing page for Kiros, designed to be hosted on Vercel. The project uses assets and styles exported from Figma.
+This is a Next.js landing page for Kiros, designed to be hosted on Vercel. Built with TypeScript and Tailwind CSS.
 
 ## Project Structure
 
-- **figma-*.css files**: Large CSS files exported from Figma containing styles for different pages/sections
-  - figma-home.css, figma-features.css, figma-about.css (as needed)
-  - Designed for 1440px width viewport
-  - Contains auto-layout flexbox styles from Figma
-  - Style definitions are verbose due to Figma's export format
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── page.tsx           # Home page
+│   ├── layout.tsx         # Root layout
+│   ├── globals.css        # Global styles (Tailwind)
+│   ├── company/           # Company page
+│   ├── features/          # Features page
+│   ├── join-us/           # Join us / signup page
+│   ├── terms-of-service/  # Terms of service page
+│   └── thankyou/          # Thank you page
+├── components/
+│   ├── layout/            # Layout components (Navbar, Footer, etc.)
+│   ├── sections/          # Page sections organized by page
+│   │   ├── home/
+│   │   ├── features/
+│   │   ├── company/
+│   │   └── ...
+│   └── ui/                # Reusable UI components (Badge, PatternDivider)
+└── lib/                   # Utility functions
+public/
+├── images/                # Page-specific images
+├── icons/                 # SVG icons
+├── logos/                 # Brand logos
+└── decorative/            # Decorative SVG elements
+```
 
 ## Development
 
 ### Local Development
 
-Serve static files locally using any simple HTTP server:
-
 ```bash
-# Using Python
-python -m http.server 8000
-
-# Using Node.js http-server (install: npm i -g http-server)
-http-server -p 8000
-
-# Using PHP
-php -S localhost:8000
+npm install
+npm run dev
 ```
 
-Then open http://localhost:8000 in your browser.
+Open http://localhost:3000 in your browser.
 
-### Working with Figma Exports
+### Build
 
-- The CSS file is exported directly from Figma and contains auto-layout styles
-- When re-exporting from Figma, replace the entire CSS file rather than manually editing
-- The CSS uses Figma's naming conventions (e.g., "box", "wrapper", "text", "Frame")
-- Classes and selectors may need to be added manually to HTML files to apply these styles
+```bash
+npm run build
+npm run start
+```
+
+### Linting
+
+```bash
+npm run lint
+```
 
 ## Deployment
 
 ### Vercel Deployment
 
-This project deploys to Vercel as a static site via the Vercel console (web dashboard). The repository is connected to Vercel through the web interface, and deployments happen automatically on git push.
+This project deploys to Vercel via the Vercel console (web dashboard). The repository is connected to Vercel through the web interface, and deployments happen automatically on git push.
 
-The project is configured to serve static HTML/CSS/JS files directly.
+## Tech Stack
 
-## Architecture
+- **Framework**: Next.js 14+ (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Hosting**: Vercel
 
-This is a simple static site architecture:
-- No build process required
-- No JavaScript framework
-- Pure HTML/CSS with Figma-generated styles
-- Vercel handles static file serving
+## Architecture Notes
 
-## File Organization
-
-When adding new pages or sections:
-- Create corresponding HTML files (e.g., `index.html`, `about.html`)
-- Keep Figma exports as separate CSS files per page/section if needed
-- Consider extracting common styles into a shared CSS file to reduce duplication
+- Components are organized by page/section for easy navigation
+- Layout components (Navbar, Footer) are shared across all pages
+- Each page imports its sections from `components/sections/<page-name>/`
+- UI components in `components/ui/` are reusable across the site
