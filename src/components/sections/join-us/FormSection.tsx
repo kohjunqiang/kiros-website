@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { submitJoinForm } from "@/app/actions";
 import { ChevronLeft, ChevronRight, ChevronDown, Check } from "lucide-react";
 import { Badge } from "@/components/ui";
 
@@ -50,6 +51,8 @@ export function FormSection() {
         advisorOwes: "",
     });
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const steps = [
         { number: 1, label: "Tell Us About Yourself" },
         { number: 2, label: "Tell Us About Your Practice" },
@@ -57,12 +60,25 @@ export function FormSection() {
         { number: 4, label: "Founding Circle" }
     ];
 
-    const handleNextStep = (e: React.FormEvent) => {
+    const handleNextStep = async (e: React.FormEvent) => {
         e.preventDefault();
         if (currentStep < 4) {
             setCurrentStep(currentStep + 1);
         } else {
-            router.push('/thankyou');
+            setIsSubmitting(true);
+            try {
+                const result = await submitJoinForm(formData);
+                if (result.success) {
+                    router.push('/thankyou');
+                } else {
+                    alert(result.error);
+                    setIsSubmitting(false);
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Something went wrong. Please try again.");
+                setIsSubmitting(false);
+            }
         }
     };
 
@@ -199,6 +215,8 @@ export function FormSection() {
                                                     required
                                                     type="text"
                                                     placeholder="Financial advisory"
+                                                    value={formData.advisoryGroup}
+                                                    onChange={(e) => updateFormData('advisoryGroup', e.target.value)}
                                                     className="w-full h-10 px-3 py-2 bg-white border border-[#e2e8f0] rounded-md shadow-[0px_1px_2px_0px_rgba(17,24,39,0.04)] text-[14px] text-[#111827] placeholder:text-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#6781e0] focus:border-[#6781e0]"
                                                 />
                                             </div>
@@ -212,6 +230,8 @@ export function FormSection() {
                                                     required
                                                     type="text"
                                                     placeholder="A1234B"
+                                                    value={formData.rnfCode}
+                                                    onChange={(e) => updateFormData('rnfCode', e.target.value)}
                                                     className="w-full h-10 px-3 py-2 bg-white border border-[#e2e8f0] rounded-md shadow-[0px_1px_2px_0px_rgba(17,24,39,0.04)] text-[14px] text-[#111827] placeholder:text-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#6781e0] focus:border-[#6781e0]"
                                                 />
                                             </div>
@@ -260,6 +280,8 @@ export function FormSection() {
                                                 <select
                                                     required
                                                     defaultValue=""
+                                                    value={formData.hearAboutUs}
+                                                    onChange={(e) => updateFormData('hearAboutUs', e.target.value)}
                                                     className="w-full h-10 px-3 bg-white border border-[#e2e8f0] rounded-md shadow-[0px_1px_2px_0px_rgba(17,24,39,0.04)] text-[14px] text-[#111827] appearance-none focus:outline-none focus:ring-2 focus:ring-[#6781e0] focus:border-[#6781e0] cursor-pointer"
                                                 >
                                                     <option value="" disabled>Select one</option>
@@ -509,10 +531,11 @@ export function FormSection() {
                                     </button>
                                     <button
                                         type="submit"
-                                        className="flex-1 flex items-center justify-center gap-2 px-5 py-2.5 bg-[#e56024] rounded-md shadow-sm text-[16px] font-medium text-white hover:bg-[#d14f15] transition-colors"
+                                        disabled={isSubmitting}
+                                        className="flex-1 flex items-center justify-center gap-2 px-5 py-2.5 bg-[#e56024] rounded-md shadow-sm text-[16px] font-medium text-white hover:bg-[#d14f15] transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
                                     >
-                                        {currentStep === 4 ? 'Submit' : 'Next Step'}
-                                        <ChevronRight className="w-4 h-4" />
+                                        {isSubmitting ? 'Sending...' : (currentStep === 4 ? 'Submit' : 'Next Step')}
+                                        {!isSubmitting && <ChevronRight className="w-4 h-4" />}
                                     </button>
                                 </div>
 
