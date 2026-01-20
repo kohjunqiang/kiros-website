@@ -38,11 +38,15 @@ export async function submitJoinForm(formData: FormData) {
 
         const emailHtml = await render(ApplicationSubmissionEmail(formData));
 
-        const mailOptions = {
+        const mailOptions: nodemailer.SendMailOptions = {
             from: env.SMTP_EMAIL_FROM,
             to: env.CONTACT_FORM_EMAIL,
             subject: `New Join Us Form Submission from ${formData.firstName} ${formData.lastName}`,
             html: emailHtml,
+            cc: env.CONTACT_FORM_EMAIL_CC
+                ? env.CONTACT_FORM_EMAIL_CC.split(",").map(email => email.trim())
+                : undefined,
+            bcc: env.CONTACT_FORM_EMAIL_BCC ? env.CONTACT_FORM_EMAIL_BCC.split(",").map(email => email.trim()) : undefined,
         };
 
         await transporter.sendMail(mailOptions);
