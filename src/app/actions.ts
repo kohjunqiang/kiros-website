@@ -40,7 +40,7 @@ export async function submitJoinForm(formData: FormData) {
         const mailOptions: nodemailer.SendMailOptions = {
             from: process.env.SMTP_EMAIL_FROM,
             to: process.env.CONTACT_FORM_EMAIL,
-            subject: `New Join Us Form Submission from ${formData.firstName} ${formData.lastName}`,
+            subject: `[Kiros Website] Form Submission from ${formData.firstName} ${formData.lastName}`,
             html: emailHtml,
             cc: process.env.CONTACT_FORM_EMAIL_CC
                 ? process.env.CONTACT_FORM_EMAIL_CC.split(",").map((email: string) => email.trim())
