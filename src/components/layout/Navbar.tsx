@@ -41,7 +41,7 @@ export function Navbar({ variant = 'light', activePage }: NavbarProps) {
                         >
                             Features
                         </Link>
-                        <Link
+                        {/* <Link
                             href="#"
                             className={`text-[16px] font-medium leading-[24px] transition-colors ${activePage === 'compliance'
                                 ? 'text-[#e56024]'
@@ -51,7 +51,7 @@ export function Navbar({ variant = 'light', activePage }: NavbarProps) {
                                 }`}
                         >
                             Compliance
-                        </Link>
+                        </Link> */}
                         <Link href="/company" className="flex items-center gap-1 group">
 
                             <ChevronRight className="size-4 text-[#94a3b8]" />
@@ -65,7 +65,7 @@ export function Navbar({ variant = 'light', activePage }: NavbarProps) {
                                 Company
                             </span>
                         </Link>
-                        <div className="flex items-center gap-1 group cursor-pointer">
+                        {/* <div className="flex items-center gap-1 group cursor-pointer">
 
                             <ChevronRight className="size-4 text-[#94a3b8]" />
 
@@ -77,12 +77,12 @@ export function Navbar({ variant = 'light', activePage }: NavbarProps) {
                                 }`}>
                                 Resources
                             </span>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="flex items-center gap-2 ml-4">
                         <Link
-                            href="#"
+                            href="https://app.kiros.sg"
                             className={`px-4 py-2 rounded-md font-medium text-[16px] leading-[24px] transition-colors ${isDark
                                 ? 'bg-[rgba(255,255,255,0.15)] border border-[rgba(226,232,240,0.1)] text-white hover:bg-[rgba(255,255,255,0.2)]'
                                 : 'border border-slate-200 text-[#111827] hover:bg-gray-50'
