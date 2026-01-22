@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import { Badge } from "@/components/ui";
 
 export function FAQSection() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -40,9 +41,8 @@ export function FAQSection() {
                 <div className="w-full max-w-[1320px] mx-auto px-[40px] pt-[120px] pb-[80px] flex flex-col items-center">
                     <div className="w-full max-w-[874px] flex flex-col items-center gap-3">
                         {/* Badge with SVG */}
-                        <div className="relative inline-flex">
-                            <img src="/badges/home-badge-common.svg" alt="Common Questions" className="h-6 md:h-8" />
-                        </div>
+                        <Badge text="Common Questions" />
+
 
                         {/* Title */}
                         <h2 className="text-[52px] font-semibold text-[#111827] text-center tracking-[-1.04px] leading-[1.1]">
