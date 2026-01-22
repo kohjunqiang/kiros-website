@@ -1,7 +1,6 @@
 "use server";
 
 import nodemailer from "nodemailer";
-import { env } from "@/env";
 import { render } from "@react-email/render";
 import { ApplicationSubmissionEmail } from "@/emails/application-submission";
 
@@ -27,26 +26,26 @@ interface FormData {
 export async function submitJoinForm(formData: FormData) {
     try {
         const transporter = nodemailer.createTransport({
-            host: env.SMTP_HOST,
-            port: parseInt(env.SMTP_PORT),
-            secure: env.SMTP_SECURE === "true",
+            host: process.env.SMTP_HOST,
+            port: parseInt(process.env.SMTP_PORT || "587"),
+            secure: process.env.SMTP_SECURE === "true",
             auth: {
-                user: env.SMTP_USERNAME,
-                pass: env.SMTP_PASSWORD,
+                user: process.env.SMTP_USERNAME,
+                pass: process.env.SMTP_PASSWORD,
             },
         });
 
         const emailHtml = await render(ApplicationSubmissionEmail(formData));
 
         const mailOptions: nodemailer.SendMailOptions = {
-            from: env.SMTP_EMAIL_FROM,
-            to: env.CONTACT_FORM_EMAIL,
+            from: process.env.SMTP_EMAIL_FROM,
+            to: process.env.CONTACT_FORM_EMAIL,
             subject: `New Join Us Form Submission from ${formData.firstName} ${formData.lastName}`,
             html: emailHtml,
-            cc: env.CONTACT_FORM_EMAIL_CC
-                ? env.CONTACT_FORM_EMAIL_CC.split(",").map(email => email.trim())
+            cc: process.env.CONTACT_FORM_EMAIL_CC
+                ? process.env.CONTACT_FORM_EMAIL_CC.split(",").map((email: string) => email.trim())
                 : undefined,
-            bcc: env.CONTACT_FORM_EMAIL_BCC ? env.CONTACT_FORM_EMAIL_BCC.split(",").map(email => email.trim()) : undefined,
+            bcc: process.env.CONTACT_FORM_EMAIL_BCC ? process.env.CONTACT_FORM_EMAIL_BCC.split(",").map((email: string) => email.trim()) : undefined,
         };
 
         await transporter.sendMail(mailOptions);
